@@ -7,6 +7,10 @@
 var app = require('../index');
 var debug = require('debug')('ranking-names:server');
 var http = require('http');
+const mongoose = require("mongoose")
+var onstart = require('../onstart');
+
+require('dotenv').config();
 
 /**
  * Get port from environment and store in Express.
@@ -24,8 +28,15 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+const mongoPass = process.env.MONGO_DB_PASS;
+ mongoose
+  .connect(
+    "mongodb+srv://rankingnames:" +  mongoPass + "@cluster0.sopzt.mongodb.net/ranking_names?retryWrites=true&w=majority"
+    , { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+      server.listen(port);
+  });
 
-server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -87,4 +98,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  onstart.loadMembers();
 }
