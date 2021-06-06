@@ -2,13 +2,12 @@ const mongoose = require("mongoose")
 const GrouppedFirstname = require('./models/GrouppedFirstname');
 const GrouppedLastname = require('./models/GrouppedLastname');
 const Member = require('./models/Member');
+const { parseFirstAndLastName } = require("./utils");
 
 const firstnames = {};
 const lastnames = {};
 
-const removeAccents = (str) => {
-    return str && str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-} 
+
 
 const readMembersFromSlack = async () => {
     
@@ -22,25 +21,15 @@ const readMembersFromSlack = async () => {
     return await web.users.list();
 };
 
-const parseFirstAndLastName = (oneMember) => {
-    if (!oneMember.profile.first_name) {
-        const splitted = oneMember.profile.real_name.split(/ (.+)/)
-        oneMember.profile.first_name = splitted[0];
-        oneMember.profile.last_name = splitted[1];
-    }
-    oneMember.profile.first_name = removeAccents(oneMember.profile.first_name);
-    oneMember.profile.last_name = removeAccents(oneMember.profile.last_name);
-};
-
 const saveMembers = async (members) => {
     if (members && members.length) {
         for (let oneMember of members) {
 
             // Only users, no bots and no apps
-            parseFirstAndLastName(oneMember);
+            parseFirstAndLastName(oneMember.profile);
             if (                 
-                !oneMember.profile.first_name &&
-                !oneMember.profile.last_name &&
+                oneMember.profile.first_name &&
+                oneMember.profile.last_name &&
                 !oneMember.is_bot && 
                 !oneMember.is_app_user &&
                 !oneMember.profile.always_active
@@ -76,24 +65,24 @@ const setGrouppedMembers = (oneMember) => {
     if (!oneMember.deleted) {
         if (!firstnames[oneMember.profile.first_name]) {
             firstnames[oneMember.profile.first_name] = {
-                id: oneMember.id,
                 firstname: oneMember.profile.first_name,
                 members: []
             };
         }
         firstnames[oneMember.profile.first_name].members.push({
+            id: oneMember.id,
             lastname: oneMember.profile.last_name,
             picture: oneMember.profile.image_72
         });
 
         if (!lastnames[oneMember.profile.last_name]) {
             lastnames[oneMember.profile.last_name] = {
-                id: oneMember.id,
                 lastname: oneMember.profile.last_name,
                 members: []
             };
         }
         lastnames[oneMember.profile.last_name].members.push({
+            id: oneMember.id,
             firstname: oneMember.profile.last_name,
             picture: oneMember.profile.image_72
         });
@@ -123,9 +112,7 @@ const loadMembers = async () => {
     // Populate members collection if it is empty
     if (members.length === 0) {
         const results = await readMembersFromSlack();
-
         const session = await mongoose.startSession();
-
         await session.withTransaction(async () => {
             await saveMembers(results.members);
             await saveGrouppedMembers();
