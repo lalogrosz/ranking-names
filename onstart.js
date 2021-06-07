@@ -51,7 +51,7 @@ const saveOneMember = async (oneMember) => {
             lastname: oneMember.profile.last_name,
             deleted: oneMember.deleted,
             date_in: new Date(2021,1,1).getTime(),
-            date_out: oneMember.deleted ? oneMember.updated : null
+            date_out: oneMember.deleted ? (oneMember.updated * 1000) : null
         };
         const newMember = new Member(userData);
         await newMember.save();
@@ -107,10 +107,10 @@ const saveGrouppedMembers = async () => {
 };
 
 const loadMembers = async () => {
-
     const members = await Member.find();
     // Populate members collection if it is empty
     if (members.length === 0) {
+        console.log("Server loaded. Trying to get slack members");
         const results = await readMembersFromSlack();
         const session = await mongoose.startSession();
         await session.withTransaction(async () => {
