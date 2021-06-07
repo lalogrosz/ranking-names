@@ -19,7 +19,7 @@ const sortMembersBySizeAndName = (group, key) => {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  /*const grouppedFirstnames = sortMembersBySizeAndName(await GrouppedFirstname.find());
+  const grouppedFirstnames = sortMembersBySizeAndName(await GrouppedFirstname.find());
   const grouppedLastnames = sortMembersBySizeAndName(await GrouppedLastname.find());
 
   const newMembers = await Member.find({
@@ -34,11 +34,9 @@ router.get('/', function (req, res, next) {
       $gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000)))
     },
     deleted: true
-  }).sort({ "date_out": -1 })
+  }).sort({ "date_out": -1 });  
 
-  */
-
-  res.send("Deploy con exito");
+  res.json(newLeaves);
 
 });
 
