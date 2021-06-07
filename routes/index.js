@@ -18,7 +18,7 @@ const sortMembersBySizeAndName = (group, key) => {
 }
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
   const grouppedFirstnames = sortMembersBySizeAndName(await GrouppedFirstname.find());
   const grouppedLastnames = sortMembersBySizeAndName(await GrouppedLastname.find());
 

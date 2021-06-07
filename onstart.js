@@ -109,8 +109,9 @@ const saveGrouppedMembers = async () => {
 const loadMembers = async () => {
     const members = await Member.find();
     // Populate members collection if it is empty
+    console.log("Server loaded");
     if (members.length === 0) {
-        console.log("Server loaded. Trying to get slack members");
+        console.log("Trying to get slack members");
         const results = await readMembersFromSlack();
         const session = await mongoose.startSession();
         await session.withTransaction(async () => {
