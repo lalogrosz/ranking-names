@@ -38,7 +38,7 @@ router.get('/', async (req, res, next) => {
 
 
 
-  res.json(newLeaves);
+  res.send("Deploy con exito");
 
 });
 
