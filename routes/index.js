@@ -18,8 +18,8 @@ const sortMembersBySizeAndName = (group, key) => {
 }
 
 /* GET home page. */
-router.get('/', async (req, res, next) => {
-  const grouppedFirstnames = sortMembersBySizeAndName(await GrouppedFirstname.find());
+router.get('/', function (req, res, next) {
+  /*const grouppedFirstnames = sortMembersBySizeAndName(await GrouppedFirstname.find());
   const grouppedLastnames = sortMembersBySizeAndName(await GrouppedLastname.find());
 
   const newMembers = await Member.find({
@@ -36,7 +36,7 @@ router.get('/', async (req, res, next) => {
     deleted: true
   }).sort({ "date_out": -1 })
 
-
+  */
 
   res.send("Deploy con exito");
 
