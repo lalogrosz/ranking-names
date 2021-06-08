@@ -32,52 +32,57 @@ const addUser = async (user) => {
         return false;
     }
 
-    const userData = {
-        slack_id: user.id,
-        firstname: user.profile.first_name,
-        lastname: user.profile.last_name,
-        deleted: user.deleted,
-        date_in: new Date().getTime(),
-        date_out: null
-    };
-    const newMember = new Member(userData);
-    await newMember.save();
+    try {
 
-    
-    // Saving in firstname group
-    let grouppedFirst = await GrouppedFirstname.findOne({firstname: user.profile.first_name});
-    console.log("Has group first?", grouppedFirst);
-    // Create if not exists
-    if (!grouppedFirst) {
-        grouppedFirst = new GrouppedFirstname({
+        const userData = {
+            slack_id: user.id,
             firstname: user.profile.first_name,
-            members: []
-        });
-    }
-    grouppedFirst.members.push({
-        id: user.id,
-        lastname: user.profile.last_name,
-        picture: user.profile.image_72
-    });
-    await grouppedFirst.save();
-
-
-    // Saving in lastname group
-    let grouppedLast = await GrouppedLastname.findOne({lastname: user.profile.last_name});
-    // Create if not exists
-    console.log("Has group last?", grouppedLast);
-    if (!grouppedLast) {
-        grouppedLast = new GrouppedLastname({
             lastname: user.profile.last_name,
-            members: []
+            deleted: user.deleted,
+            date_in: new Date().getTime(),
+            date_out: null
+        };
+        const newMember = new Member(userData);
+        await newMember.save();
+
+        console.log('Try to find firstname');
+        // Saving in firstname group
+        let grouppedFirst = await GrouppedFirstname.findOne({firstname: user.profile.first_name});
+        console.log("Has group first?", grouppedFirst);
+        // Create if not exists
+        if (!grouppedFirst) {
+            grouppedFirst = new GrouppedFirstname({
+                firstname: user.profile.first_name,
+                members: []
+            });
+        }
+        grouppedFirst.members.push({
+            id: user.id,
+            lastname: user.profile.last_name,
+            picture: user.profile.image_72
         });
+        await grouppedFirst.save();
+
+
+        // Saving in lastname group
+        let grouppedLast = await GrouppedLastname.findOne({lastname: user.profile.last_name});
+        // Create if not exists
+        console.log("Has group last?", grouppedLast);
+        if (!grouppedLast) {
+            grouppedLast = new GrouppedLastname({
+                lastname: user.profile.last_name,
+                members: []
+            });
+        }
+        grouppedLast.members.push({
+            id: user.id,
+            firstname: user.profile.first_name,
+            picture: user.profile.image_72
+        });
+        await grouppedLast.save();
+    } catch (e) {
+        console.log('ERROR: ', e);
     }
-    grouppedLast.members.push({
-        id: user.id,
-        firstname: user.profile.first_name,
-        picture: user.profile.image_72
-    });
-    await grouppedLast.save();
 };
 
 /* GET users listing. */
