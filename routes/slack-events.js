@@ -21,7 +21,7 @@ const deleteUser = async (user) => {
     grouppedLast.save();
 };
 
-const addUser = function (user) {
+const addUser = async function (user) {
     parseFirstAndLastName(user.profile);
 
     console.log("real name parsed");
