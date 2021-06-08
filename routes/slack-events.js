@@ -21,7 +21,7 @@ const deleteUser = async (user) => {
     grouppedLast.save();
 };
 
-const addUser = async function (user) {
+const addUser = function (user) {
     parseFirstAndLastName(user.profile);
 
     console.log("real name parsed");
@@ -49,7 +49,7 @@ const addUser = async function (user) {
 
         console.log('Try to find firstname', user.profile);
         // Saving in firstname group
-        let grouppedFirst = await GrouppedFirstname.findOne({firstname: user.profile.first_name});
+        let grouppedFirst = GrouppedFirstname.findOne({firstname: user.profile.first_name}).then();
         console.log("Has group first?", grouppedFirst);
         // Create if not exists
         if (!grouppedFirst) {
@@ -88,7 +88,7 @@ const addUser = async function (user) {
 };
 
 /* GET users listing. */
-router.post('/', function(req, res, next) {
+router.post('/', async function(req, res, next) {
     
 
     const event = req.body.event;
@@ -99,7 +99,7 @@ router.post('/', function(req, res, next) {
 
         case 'team_join':
             //console.log('New Event',req.body);
-            addUser(event.user);
+            await addUser(event.user);
             break;
     }
 
