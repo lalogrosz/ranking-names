@@ -62,11 +62,9 @@ app.use(function(err, req, res, next) {
  /**
   * Listen on provided port, on all network interfaces.
   */
- const mongoPass = process.env.MONGO_DB_PASS;
   mongoose
    .connect(
-     "mongodb+srv://rankingnames:" +  mongoPass + "@cluster0.sopzt.mongodb.net/ranking_names?retryWrites=true&w=majority"
-     , { useNewUrlParser: true, useUnifiedTopology: true })
+     process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
    .then(() => {
        server.listen(port);
    });
