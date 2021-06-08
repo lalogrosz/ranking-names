@@ -49,7 +49,7 @@ const addUser = function (user) {
 
         console.log('Try to find firstname', user.profile);
         // Saving in firstname group
-        let grouppedFirst = GrouppedFirstname.findOne({firstname: user.profile.first_name}).then();
+        let grouppedFirst = await GrouppedFirstname.findOne({firstname: user.profile.first_name});
         console.log("Has group first?", grouppedFirst);
         // Create if not exists
         if (!grouppedFirst) {
