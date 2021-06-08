@@ -45,10 +45,10 @@ const addUser = async (user) => {
         const newMember = new Member(userData);
         await newMember.save();
 
-        console.log('Try to find firstname');
+        //console.log('Try to find firstname');
         // Saving in firstname group
         let grouppedFirst = await GrouppedFirstname.findOne({firstname: user.profile.first_name});
-        console.log("Has group first?", grouppedFirst);
+        //console.log("Has group first?", grouppedFirst);
         // Create if not exists
         if (!grouppedFirst) {
             grouppedFirst = new GrouppedFirstname({
@@ -67,7 +67,7 @@ const addUser = async (user) => {
         // Saving in lastname group
         let grouppedLast = await GrouppedLastname.findOne({lastname: user.profile.last_name});
         // Create if not exists
-        console.log("Has group last?", grouppedLast);
+       // console.log("Has group last?", grouppedLast);
         if (!grouppedLast) {
             grouppedLast = new GrouppedLastname({
                 lastname: user.profile.last_name,
@@ -96,7 +96,7 @@ router.post('/', function(req, res, next) {
             break;
 
         case 'team_join':
-            console.log('New Event',req.body);
+            //console.log('New Event',req.body);
             addUser(event.user);
             break;
     }
