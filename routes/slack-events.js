@@ -21,7 +21,7 @@ const deleteUser = async (user) => {
     grouppedLast.save();
 };
 
-const addUser = async (user) => {
+const addUser = async function (user) {
     parseFirstAndLastName(user.profile);
 
     console.log("real name parsed");
@@ -47,7 +47,7 @@ const addUser = async (user) => {
         const newMember = new Member(userData);
         await newMember.save();*/
 
-        console.log('Try to find firstname');
+        console.log('Try to find firstname', user.profile);
         // Saving in firstname group
         let grouppedFirst = await GrouppedFirstname.findOne({firstname: user.profile.first_name});
         console.log("Has group first?", grouppedFirst);
