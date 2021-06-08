@@ -36,7 +36,7 @@ const addUser = async function (user) {
 
     try {
 
-        /*const userData = {
+        const userData = {
             slack_id: user.id,
             firstname: user.profile.first_name,
             lastname: user.profile.last_name,
@@ -45,7 +45,7 @@ const addUser = async function (user) {
             date_out: null
         };
         const newMember = new Member(userData);
-        await newMember.save();*/
+        await newMember.save();
 
         console.log('Try to find firstname', user.profile);
         // Saving in firstname group
