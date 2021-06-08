@@ -24,11 +24,13 @@ const deleteUser = async (user) => {
 const addUser = async (user) => {
     parseFirstAndLastName(user.profile);
 
+    console.log("real name parsed");
     if (!user.profile.first_name ||
         !user.profile.last_name ||
         user.is_bot || 
         user.is_app_user
     ) {
+        console.log("not a valid user", user);
         return false;
     }
 
@@ -45,10 +47,10 @@ const addUser = async (user) => {
         const newMember = new Member(userData);
         await newMember.save();*/
 
-        //console.log('Try to find firstname');
+        console.log('Try to find firstname');
         // Saving in firstname group
         let grouppedFirst = await GrouppedFirstname.findOne({firstname: user.profile.first_name});
-        //console.log("Has group first?", grouppedFirst);
+        console.log("Has group first?", grouppedFirst);
         // Create if not exists
         if (!grouppedFirst) {
             grouppedFirst = new GrouppedFirstname({
@@ -59,7 +61,7 @@ const addUser = async (user) => {
         grouppedFirst.members.push({
             id: user.id,
             lastname: user.profile.last_name,
-            picture: user.profile.image_72
+            picture: user.profile.image_72 || null
         });
         await grouppedFirst.save();
 
