@@ -112,14 +112,9 @@ const loadMembers = async () => {
     console.log("Server loaded");
     if (members.length === 0) {
         console.log("Trying to get slack members");
-        const results = await readMembersFromSlack();
-        const session = await mongoose.startSession();
-        await session.withTransaction(async () => {
-            await saveMembers(results.members);
-            await saveGrouppedMembers();
-        });
-
-        session.endSession();
+        const results = await readMembersFromSlack();        
+        await saveMembers(results.members);
+        await saveGrouppedMembers();        
     }
 };
 

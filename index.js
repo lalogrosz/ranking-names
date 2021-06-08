@@ -126,12 +126,12 @@ app.use(function(err, req, res, next) {
   * Event listener for HTTP server "listening" event.
   */
  
- function onListening() {
+ async function onListening() {
    var addr = server.address();
    var bind = typeof addr === 'string'
      ? 'pipe ' + addr
      : 'port ' + addr.port;
    debug('Listening on ' + bind);
-   onstart.loadMembers();
+   await onstart.loadMembers();
  }
 
