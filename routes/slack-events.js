@@ -22,6 +22,7 @@ const deleteUser = async (user) => {
 };
 
 const addUser = async function (user) {
+    console.log('New user', JSON.stringify(user.profile));
     parseFirstAndLastName(user.profile);
 
     console.log("real name parsed");
@@ -47,10 +48,8 @@ const addUser = async function (user) {
         const newMember = new Member(userData);
         await newMember.save();
 
-        console.log('Try to find firstname', user.profile);
         // Saving in firstname group
         let grouppedFirst = await GrouppedFirstname.findOne({firstname: user.profile.first_name});
-        console.log("Has group first?", grouppedFirst);
         // Create if not exists
         if (!grouppedFirst) {
             grouppedFirst = new GrouppedFirstname({
