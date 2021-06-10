@@ -84,7 +84,7 @@ const setGrouppedMembers = (oneMember) => {
         }
         lastnames[oneMember.profile.last_name].members.push({
             id: oneMember.id,
-            firstname: oneMember.profile.last_name,
+            firstname: oneMember.profile.first_name,
             picture: oneMember.profile.image_72
         });
     }

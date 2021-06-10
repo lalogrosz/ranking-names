@@ -9,6 +9,7 @@ const schema = mongoose.Schema({
     firstname: String,
 	lastname: String,
     deleted: Boolean,
+    picture: String,
     date_in: Date,
     date_out: Date
 })

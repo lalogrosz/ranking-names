@@ -16,8 +16,19 @@
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary btn-outline-white shadow text-center border-radius-md">
-                      <div class=" font-weight-bold" style="font-size: 30px">{{topFirstname.total}}</div>
+                  <div class="icon icon-shape bg-gradient-primary btn-outline-white shadow text-center border-radius-md"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" data-bs-custom-class="tooltip-members"
+                    title='
+                    {% for m in topFirstname.members %}
+                      <p>
+                        <a href="javascript:;" class="avatar avatar-xs rounded-circle">
+                          <img alt="Image placeholder" src="{{m.picture}}">
+                        </a>
+                        <span>{{m.lastname}}</span>
+                      </p>
+                    {% endfor %}
+                    '>
+                      <div class=" font-weight-bold" style="font-size: 30px">{{topFirstname.members | length}}</div>
                   </div>
                 </div>
                
@@ -38,8 +49,19 @@
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary btn-outline-white shadow text-center border-radius-md">
-                      <div class=" font-weight-bold" style="font-size: 30px">{{topLastname.total}}</div>
+                  <div class="icon icon-shape bg-gradient-primary btn-outline-white shadow text-center border-radius-md" 
+                  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" data-bs-custom-class="tooltip-members"
+                  title='
+                  {% for m in topLastname.members %}
+                    <p>
+                      <a href="javascript:;" class="avatar avatar-xs rounded-circle">
+                        <img alt="Image placeholder" src="{{m.picture}}">
+                      </a>
+                      <span>{{m.firstname}}</span>
+                    </p>
+                  {% endfor %}
+                  '>
+                      <div class=" font-weight-bold" style="font-size: 30px">{{topLastname.members | length}}</div>
                   </div>
                 </div>
                
@@ -54,15 +76,25 @@
                 <div class="col-8">
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Last Incomes</p>
-                    <h5 class="font-weight-bolder mb-0 text-success ">
-                      {{lastIncomes}}
+                    <h5 class="font-weight-bolder mb-0 text-success ">                      
                       <span class="text-sm font-weight-bolder">in 30 days</span>
                     </h5>
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-satisfied text-lg opacity-10" aria-hidden="true"></i>
+                  <div class="icon icon-shape bg-gradient-primary btn-outline-white shadow text-center border-radius-md" 
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" data-bs-custom-class="tooltip-members"
+                    title='
+                    {% for m in lastIncomes %}
+                      <p>
+                        <a href="javascript:;" class="avatar avatar-xs rounded-circle">
+                          <img alt="Image placeholder" src="{{m.picture}}">
+                        </a>
+                        <span>{{m.firstname}} {{m.lastname}}</span>
+                      </p>
+                    {% endfor %}
+                    '>
+                    <div class=" font-weight-bold" style="font-size: 30px">{{lastIncomes | length}}</div>
                   </div>
                 </div>
               </div>

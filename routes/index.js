@@ -49,9 +49,9 @@ router.get('/', async function (req, res, next) {
 
   res.render('index', { 
     title: 'Ranking Names',
-    topFirstname: {name: grouppedFirstnames[0].firstname, total: grouppedFirstnames[0].members.length},
-    topLastname: {name: grouppedLastnames[0].lastname, total: grouppedLastnames[0].members.length},
-    lastIncomes: newMembers.length,
+    topFirstname: {name: grouppedFirstnames[0].firstname, members: grouppedFirstnames[0].members},
+    topLastname: {name: grouppedLastnames[0].lastname, members: grouppedLastnames[0].members},
+    lastIncomes: newMembers,
     duplicatedFirstnames,
     duplicatedLastnames,
     //duplicatedFirstnamesMembers: filterFirstnames.map(oneGroup => oneGroup.members),

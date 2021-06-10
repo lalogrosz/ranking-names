@@ -1,0 +1,12 @@
+name: 1-day-cron
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update members images
+        run: |
+          curl --request POST \
+          --url 'https://ranking-names.vercel.app/update-users'

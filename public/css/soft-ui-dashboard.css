@@ -21327,4 +21327,24 @@ p {
   border-bottom-right-radius: 0.5rem;
 }
 
+.tooltip-members .tooltip-inner {
+  text-align: left;
+}
+
+.tooltip-members p {
+  padding: 0px 5px 0 5px;
+  margin-bottom: 6px;
+}
+
+.tooltip-members a {
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.tooltip-members span {
+  font-size: 12px;
+  font-weight: bold;
+}
+
 /*# sourceMappingURL=dashboard-free.css.map */
