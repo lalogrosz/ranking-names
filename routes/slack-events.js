@@ -29,7 +29,8 @@ const addUser = async function (user) {
     if (!user.profile.first_name ||
         !user.profile.last_name ||
         user.is_bot || 
-        user.is_app_user
+        user.is_app_user ||
+        user.is_restricted
     ) {
         console.log("not a valid user", user);
         return false;

@@ -11,16 +11,16 @@ const sortMembersBySizeAndName = (group, key) => {
     if (a.members.length > b.members.length) return -1;
 
     // And by firstname
-    if (a[key] < b[key]) return 1;
-    if (a[key] > b[key]) return -1;
+    if (a[key] < b[key]) return -1;
+    if (a[key] > b[key]) return 1;
     return 0;
   });
 }
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
-  const grouppedFirstnames = sortMembersBySizeAndName(await GrouppedFirstname.find());
-  const grouppedLastnames = sortMembersBySizeAndName(await GrouppedLastname.find());
+  const grouppedFirstnames = sortMembersBySizeAndName(await GrouppedFirstname.find(), 'firstname');
+  const grouppedLastnames = sortMembersBySizeAndName(await GrouppedLastname.find(), 'lastname');
 
   const newMembers = await Member.find({
     date_in: {
@@ -29,14 +29,36 @@ router.get('/', async function (req, res, next) {
     deleted: false
   }).sort({ "date_in": -1 });
 
-  const newLeaves = await Member.find({
+  /*const newLeaves = await Member.find({
     date_out: {
       $gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000)))
     },
     deleted: true
-  }).sort({ "date_out": -1 });  
+  }).sort({ "date_out": -1 }); */
+  const filterFirstnames = grouppedFirstnames.filter(oneGroup => oneGroup.members.length > 1);
+  const duplicatedFirstnames = {
+    labels: filterFirstnames.map(oneGroup => oneGroup.firstname),
+    values: filterFirstnames.map(oneGroup => oneGroup.members.length)
+  }
 
-  res.json(newLeaves);
+  const filterLastnames = grouppedLastnames.filter(oneGroup => oneGroup.members.length > 1);
+  const duplicatedLastnames = {
+    labels: filterLastnames.map(oneGroup => oneGroup.lastname),
+    values: filterLastnames.map(oneGroup => oneGroup.members.length)
+  }
+
+  res.render('index', { 
+    title: 'Ranking Names',
+    topFirstname: {name: grouppedFirstnames[0].firstname, total: grouppedFirstnames[0].members.length},
+    topLastname: {name: grouppedLastnames[0].lastname, total: grouppedLastnames[0].members.length},
+    lastIncomes: newMembers.length,
+    duplicatedFirstnames,
+    duplicatedLastnames,
+    //duplicatedFirstnamesMembers: filterFirstnames.map(oneGroup => oneGroup.members),
+    //duplicatedLastnamesMembers: filterLastnames.map(oneGroup => oneGroup.members),
+    grouppedFirstnames,
+    grouppedLastnames 
+  });
 
 });
 

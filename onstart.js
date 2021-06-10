@@ -32,7 +32,8 @@ const saveMembers = async (members) => {
                 oneMember.profile.last_name &&
                 !oneMember.is_bot && 
                 !oneMember.is_app_user &&
-                !oneMember.profile.always_active
+                !oneMember.profile.always_active &&
+                !oneMember.is_restricted
             ) {
                 await saveOneMember(oneMember);
                 setGrouppedMembers(oneMember);                
