@@ -5,7 +5,8 @@ const schema = mongoose.Schema({
 	members: [{
         id: String,
         lastname: String,
-        picture: String
+        picture: String,
+        deleted: Boolean
     }]
 })
 
