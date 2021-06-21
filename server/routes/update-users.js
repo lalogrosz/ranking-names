@@ -15,7 +15,7 @@ router.get('/', async function(req, res, next) {
   const web = new WebClient(token);
   const allUsers = await web.users.list();
   const members = allUsers.members.filter(
-      m => !m.is_restricted && !m.is_bot && !m.is_app_user
+      m => !m.is_restricted && !m.is_bot && !m.is_app_user && !m.profile.always_active
   );
 
   console.log('total users ' + allUsers.length);
@@ -30,14 +30,16 @@ router.get('/', async function(req, res, next) {
         updatedData
     );
 
-    await GrouppedFirstname.findOneAndUpdate(
+    await GrouppedFirstname.updateOne(
         {id: m.id},
-        updatedData
+        updatedData,
+        {multi: true}
     );
 
-    await GrouppedLastname.findOneAndUpdate(
+    await GrouppedLastname.updateOne(
         {id: m.id},
-        updatedData
+        updatedData,
+        {multi: true}
     );
   }
   res.json(members);
