@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
   // Initialize
   const web = new WebClient(token);
   const members = (await web.users.list()).members.filter(
-      m => !m.deleted && !m.is_restricted && !m.is_bot && !m.is_app_user && !m.is_restricted
+      m => !m.is_restricted && !m.is_bot && !m.is_app_user && !m.is_restricted
   );
 
   for (let m of members) {
