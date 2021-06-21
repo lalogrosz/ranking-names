@@ -9,4 +9,4 @@ jobs:
       - name: Update members images
         run: |
           curl --request POST \
-          --url 'https://ranking-names.vercel.app/update-users'
+          --url 'https://ranking-names-api.vercel.app/update-users'
