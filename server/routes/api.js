@@ -4,12 +4,17 @@ const GrouppedLastname = require('../models/GrouppedLastname');
 const Member = require('../models/Member');
 var router = express.Router();
 
+const filterRemoved = (collection) => {
+  collection.forEach(oneGroup => {
+      oneGroup.members = oneGroup.members.filter(m => !m.deleted);
+  });
+  return collection.filter(oneGroup => oneGroup.members.length > 0);
+};
+
 const sortMembersBySizeAndName = (group, key, deleted) => {
-    /*if (!deleted) {
-      group.forEach(g => {
-        g.members = g.members.filter(m => !m.deleted);
-      });
-    }*/
+    if (!deleted) {
+      group = filterRemoved(group);
+    }
     return group.sort((a, b) => {
       // Sort by members size
       if (a.members.length < b.members.length) return 1;
@@ -46,16 +51,7 @@ const sortMembersBySizeAndName = (group, key, deleted) => {
 
   /* GET home page. */
   router.get('/active-users', async function (req, res, next) {
-    let {grouppedFirstnames, grouppedLastnames, newMembers} = await getAllUsers(false);
-
-    const filterRemoved = (collection) => {
-        collection.forEach(oneGroup => {
-            oneGroup.members = oneGroup.members.filter(m => !m.deleted);
-        });
-        return collection.filter(oneGroup => oneGroup.members.length > 0);
-    };
-    grouppedFirstnames = filterRemoved(grouppedFirstnames);
-    grouppedLastnames = filterRemoved(grouppedLastnames);
+    let {grouppedFirstnames, grouppedLastnames, newMembers} = await getAllUsers(false);    
 
     res.json({
         newMembers,

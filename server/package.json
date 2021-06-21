@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon -L index.js -e ejs,js,css,html,jpg,png,scss,twig",
+    "dev": "nodemon -L index.js -e ejs,js,css,html,jpg,png,scss,twig --inspect",
     "start": "node index.js"
   },
   "dependencies": {

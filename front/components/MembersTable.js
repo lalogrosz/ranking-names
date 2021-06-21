@@ -41,8 +41,8 @@ const MembersTable = ({
                             <td>
                                 <div className="avatar-group mt-2">
                                 {oneGroup.members.map((oneMember, index2) => (
-                                    <a key={index2} href="" className="avatar avatar-lg rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title={oneMember[memberKey]}>
-                                      <Image src={oneMember.picture} layout='fill'  />
+                                    <a key={index2}  className="avatar avatar-lg rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title={oneMember[memberKey]}>
+                                      <Image src={oneMember.picture} layout='fill' />
                                     </a>   
                                 ))}
                                                      
