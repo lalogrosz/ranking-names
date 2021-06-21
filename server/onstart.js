@@ -63,7 +63,7 @@ const saveOneMember = async (oneMember) => {
 };
 
 const setGrouppedMembers = (oneMember) => {
-    if (!oneMember.deleted) {
+    //if (!oneMember.deleted) {
         if (!firstnames[oneMember.profile.first_name]) {
             firstnames[oneMember.profile.first_name] = {
                 firstname: oneMember.profile.first_name,
@@ -73,7 +73,8 @@ const setGrouppedMembers = (oneMember) => {
         firstnames[oneMember.profile.first_name].members.push({
             id: oneMember.id,
             lastname: oneMember.profile.last_name,
-            picture: oneMember.profile.image_72
+            picture: oneMember.profile.image_72,
+            deleted: oneMember.deleted
         });
 
         if (!lastnames[oneMember.profile.last_name]) {
@@ -85,9 +86,10 @@ const setGrouppedMembers = (oneMember) => {
         lastnames[oneMember.profile.last_name].members.push({
             id: oneMember.id,
             firstname: oneMember.profile.first_name,
-            picture: oneMember.profile.image_72
+            picture: oneMember.profile.image_72,
+            deleted: oneMember.deleted
         });
-    }
+    //}
 };
 
 const saveGrouppedMembers = async () => {

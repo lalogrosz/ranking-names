@@ -20,19 +20,21 @@ router.get('/', async function(req, res, next) {
   for (let m of members) {
     console.log('Updating user ', m.profile);
 
+    const updatedData = {picture: m.profile.image_72, deleted: m.deleted};
+
     await Member.findOneAndUpdate(
         {slack_id: m.id},
-        {picture: m.profile.image_72}
+        updatedData
     );
 
     await GrouppedFirstname.findOneAndUpdate(
         {id: m.id},
-        {picture: m.profile.image_72}
+        updatedData
     );
 
     await GrouppedLastname.findOneAndUpdate(
         {id: m.id},
-        {picture: m.profile.image_72}
+        updatedData
     );
   }
   res.json({success: true});
