@@ -13,9 +13,12 @@ router.get('/', async function(req, res, next) {
   
   // Initialize
   const web = new WebClient(token);
-  const members = (await web.users.list()).members.filter(
-      m => !m.is_restricted && !m.is_bot && !m.is_app_user && !m.is_restricted
+  const allUsers = await web.users.list();
+  const members = allUsers.members.filter(
+      m => !m.is_restricted && !m.is_bot && !m.is_app_user
   );
+
+  console.log('total users ' + allUsers.length);
 
   for (let m of members) {
     console.log('Updating user ', m.profile);
@@ -37,7 +40,7 @@ router.get('/', async function(req, res, next) {
         updatedData
     );
   }
-  res.json({success: true});
+  res.json(members);
 });
 
 module.exports = router;
