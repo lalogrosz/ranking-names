@@ -74,15 +74,16 @@ const addUser = async function (user) {
 };
 
 /* GET users listing. */
-router.post('/', async function(req, res, next) {
-    
+router.post('/', async function(req, res, next) {    
 
     const event = req.body.event;
-    switch (event.type) {
+    if (event) {
+        switch (event.type) {
 
-        case 'team_join':
-            await addUser(event.user);
-            break;
+            case 'team_join':
+                await addUser(event.user);
+                break;
+        }
     }
     res.json({"challenge":req.body.challenge});    
 });
