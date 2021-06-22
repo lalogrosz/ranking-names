@@ -46,7 +46,8 @@ const addUser = async function (user) {
         grouppedFirst.members.push({
             id: user.id,
             lastname: user.profile.last_name,
-            picture: user.profile.image_72 || null
+            picture: user.profile.image_72 || null,
+            deleted: false
         });
         await grouppedFirst.save();
 
