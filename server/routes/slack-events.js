@@ -84,8 +84,7 @@ router.post('/', async function(req, res, next) {
             await addUser(event.user);
             break;
     }
-
-    res.json({});
+    res.json({"challenge":req.body.challenge});    
 });
 
 module.exports = router;
