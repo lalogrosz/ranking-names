@@ -4,7 +4,7 @@ var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var indexRouter = require('./routes/index');
+
 var apiRouter = require('./routes/api');
 var usersRouter = require('./routes/users');
 var updateUsersRouter = require('./routes/update-users');
@@ -19,9 +19,6 @@ var onstart = require('./onstart');
 
 require('dotenv').config();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'twig');
 
 app.use(cors());
 
@@ -31,7 +28,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 app.use('/api', apiRouter);
 app.use('/users', usersRouter);
 app.use('/slack-events', slackEventRouter);
@@ -71,7 +67,12 @@ app.use(function(err, req, res, next) {
   */
   mongoose
    .connect(
-     process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+     process.env.MONGO_URI, { 
+       useNewUrlParser: true, 
+       useUnifiedTopology: true, 
+       useFindAndModify: false,
+       useCreateIndex: true
+     })
    .then(() => {
        server.listen(port);
    });

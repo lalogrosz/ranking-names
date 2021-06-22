@@ -5,21 +5,6 @@ const Member = require('../models/Member');
 const { parseFirstAndLastName } = require('../utils');
 var router = express.Router();
 
-const deleteUser = async (user) => {
-    const member = await Member.findOneAndUpdate(
-        {slack_id: user.id},
-        {deleted: true, date_out: new Date().getTime()},
-        {new: true}
-    );
-
-    const grouppedFirst = GrouppedFirstname.findOne({firstname: member.firstname});
-    grouppedFirst.members = grouppedFirst.members.filter(member => member.id !== user.id);
-    grouppedFirst.save();
-
-    const grouppedLast = GrouppedLastname.findOne({lastname: member.lastname});
-    grouppedLast.members = grouppedLast.members.filter(member => member.id !== user.id);
-    grouppedLast.save();
-};
 
 const addUser = async function (user) {
     console.log('New user', JSON.stringify(user.profile));
@@ -79,11 +64,12 @@ const addUser = async function (user) {
         grouppedLast.members.push({
             id: user.id,
             firstname: user.profile.first_name,
-            picture: user.profile.image_72
+            picture: user.profile.image_72,
+            deleted: false
         });
         await grouppedLast.save();
     } catch (e) {
-        console.log('ERROR: ', e);
+        console.error('ERROR: ', e);
     }
 };
 
@@ -93,12 +79,8 @@ router.post('/', async function(req, res, next) {
 
     const event = req.body.event;
     switch (event.type) {
-        case 'user_change':
-            event.user.deleted && deleteUser(event.user);
-            break;
 
         case 'team_join':
-            //console.log('New Event',req.body);
             await addUser(event.user);
             break;
     }
