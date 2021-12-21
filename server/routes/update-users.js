@@ -4,7 +4,7 @@ const GrouppedLastname = require("../models/GrouppedLastname");
 const Member = require("../models/Member");
 var router = express.Router();
 
-const DAYS_UPDATED_DIFF = 31;
+const DAYS_UPDATED_DIFF = 3;
 
 /* GET users listing. */
 router.get("/", async function (req, res, next) {
