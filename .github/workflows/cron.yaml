@@ -6,7 +6,11 @@ jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Update members images
+      - name: Update members images invgate
         run: |
           curl --request GET \
           --url 'https://ranking-names-api.vercel.app/update-users'
+      - name: Update members images austin software
+        run: |
+          curl --request GET \
+          --url 'https://austin-software-names-api.vercel.app/update-users'
